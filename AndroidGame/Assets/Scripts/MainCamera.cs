@@ -19,7 +19,6 @@ public class MainCamera : MonoBehaviour
     {
         _camera.orthographicSize = zoomIn ? Mathf.Lerp(_maxZoom, _minZoom, value) : 
             Mathf.Lerp(_minZoom, _maxZoom, value);
-
     }
     
     private void Update() 

@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 
 public class Player : MonoBehaviour
 {
     // С буттонами наверняка не так нужно было
-    [SerializeField] private Button _leftButton;
-    [SerializeField] private Button _rightButton;
+
+    private InputPanel _inputPanel;
     [SerializeField] private float _horizontalSpeed = 2f;
     [SerializeField] private int _maxVerticalSpeedForCam;
     [SerializeField] private int _maxVerticalSpeedForEffect;
@@ -19,22 +20,24 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _inputPanel = FindObjectOfType<InputPanel>();
+        _inputPanel.OnDragEvent += InputPanelOnOnDragEvent;
         _speedEffect = FindObjectOfType<SpeedEffect>();
         _camera = FindObjectOfType<MainCamera>();
         _player = GetComponent<Rigidbody2D>();
         _playerSprite = GetComponent<SpriteRenderer>();
     }
-    
-    public void PlayerMove(float x)
+
+    private void InputPanelOnOnDragEvent(float inputX)
     {
-        // Сюда нужно добавить управление при таче по кнопкам right и left
-        _player.velocity = new Vector2(x * _horizontalSpeed, _player.velocity.y);
+        var sign = Mathf.Sign(inputX);
+        var resultSpeed = inputX == 0f ? 0f : _horizontalSpeed * sign;
+        _player.velocity = new Vector2(resultSpeed * _horizontalSpeed, _player.velocity.y);
     }
 
     private bool ZoomCameraStat()
     {
         _isCameraZoomed = (int)_player.velocity.y > _maxVerticalSpeedForCam ? false : true;
-        print(_isCameraZoomed);
         return _isCameraZoomed;
     }
 
@@ -48,7 +51,6 @@ public class Player : MonoBehaviour
     {
         var x = Input.GetAxis("Horizontal");
         _playerSprite.flipX = _player.position.x < 0; // Как правильно крутить игрока по х?
-        PlayerMove(x);
         _camera.CameraZoom(ZoomCameraStat(), Time.deltaTime);
         _speedEffect.ChangeSpeedEffectStat(SpeedEffectStat());
     }
