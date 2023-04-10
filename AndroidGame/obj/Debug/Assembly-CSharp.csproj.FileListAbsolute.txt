@@ -1,0 +1,2 @@
+C:\Repos\AndroidFallDownGame\New Unity Project\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Repos\AndroidFallDownGame\New Unity Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
