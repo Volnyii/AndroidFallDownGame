@@ -16,7 +16,9 @@ public class Player : MonoBehaviour
     private bool _isCameraZoomed;
     private bool _isSpeedEffectTurnedOn;
     private Rigidbody2D _player;
-    private SpriteRenderer _playerSprite;
+    
+    private Vector3 _inputVector;
+    private bool _faceRight;
 
     private void Awake()
     {
@@ -25,7 +27,18 @@ public class Player : MonoBehaviour
         _speedEffect = FindObjectOfType<SpeedEffect>();
         _camera = FindObjectOfType<MainCamera>();
         _player = GetComponent<Rigidbody2D>();
-        _playerSprite = GetComponent<SpriteRenderer>();
+    }
+
+    private void FlipPlayer()
+    {
+        if (_inputVector.x < 0 && !_faceRight || _inputVector.x > 0 && _faceRight)
+        {
+            Vector3 temp = transform.localScale;
+            temp.x *= -1;
+            transform.localScale = temp;
+
+            _faceRight = !_faceRight;
+        }
     }
 
     private void InputPanelOnOnDragEvent(float inputX)
@@ -50,8 +63,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         var x = Input.GetAxis("Horizontal");
-        _playerSprite.flipX = _player.position.x < 0; // Как правильно крутить игрока по х?
         _camera.CameraZoom(ZoomCameraStat(), Time.deltaTime);
         _speedEffect.ChangeSpeedEffectStat(SpeedEffectStat());
+
+        _inputVector.x = Input.GetAxisRaw("Horizontal");
+        FlipPlayer();
     }
 }
