@@ -11,16 +11,20 @@ public class Counter : MonoBehaviour
         _textInCounter = GetComponent<Text>();
     }
 
-    private string SetText(bool chickenOrNot)
+    public void SetCounterValue(ObjectType objectType)
     {
-        _counterInt = chickenOrNot ? _counterInt += 1 : _counterInt -= 1;
+        if (objectType == ObjectType.Chicken)
+        {
+            _counterInt += 1;
+        }
+        else if (objectType == ObjectType.Cloud)
+        {
+            _counterInt -= 1;
+        }
+
         if (_counterInt <= 0) 
             _counterInt = 0;
-        return _counterInt.ToString();
-    }
-
-    public void SetCounterValue(bool chickenOrNot)
-    {
-        _textInCounter.text = SetText(chickenOrNot);
+        
+        _textInCounter.text = _counterInt.ToString();
     }
 }

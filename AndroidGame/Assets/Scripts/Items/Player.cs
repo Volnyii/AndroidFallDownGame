@@ -3,6 +3,7 @@
 public class Player : MonoBehaviour
 {
     private InputPanel _inputPanel;
+    [SerializeField] private Rigidbody2D _player;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private int _speedForCamScale;
     [SerializeField] private int _speedForEffect;
@@ -11,7 +12,6 @@ public class Player : MonoBehaviour
     private SpeedEffect _speedEffect;
     private bool _isCameraZoomed;
     private bool _isSpeedEffectTurnedOn;
-    private Rigidbody2D _player;
     
     private Vector3 _inputVector;
     private bool _faceRight;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
         _inputPanel.OnDragEvent += InputPanelOnOnDragEvent;
         _speedEffect = FindObjectOfType<SpeedEffect>();
         _camera = FindObjectOfType<MainCamera>();
-        _player = GetComponent<Rigidbody2D>();
+        _player = FindObjectOfType<Rigidbody2D>();
     }
 
     private void FlipPlayer()
