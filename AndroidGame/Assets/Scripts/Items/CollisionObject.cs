@@ -15,6 +15,8 @@ public enum ObjectType
         private bool _isTriggered;
         private Counter _counterUI;
 
+        public ObjectType ObjectType => _objectType;
+        
         private void Awake()
         {
             _counterUI = FindObjectOfType<Counter>();

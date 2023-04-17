@@ -3,7 +3,8 @@
 public class Player : MonoBehaviour
 {
     private InputPanel _inputPanel;
-    [SerializeField] private Rigidbody2D _player;
+    private Rigidbody2D _player;
+    [SerializeField] private Transform _playerTuplePoint;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private int _speedForCamScale;
     [SerializeField] private int _speedForEffect;
@@ -16,6 +17,11 @@ public class Player : MonoBehaviour
     private Vector3 _inputVector;
     private bool _faceRight;
 
+    public float yDiff { get; private set; }
+    
+    private bool speedEffectActive => (int)_player.velocity.y <= _speedForEffect; 
+    private bool zoomCameraStat => (int)_player.velocity.y <= _speedForCamScale;   
+    
     private void Awake()
     {
         _inputPanel = FindObjectOfType<InputPanel>();
@@ -23,6 +29,7 @@ public class Player : MonoBehaviour
         _speedEffect = FindObjectOfType<SpeedEffect>();
         _camera = FindObjectOfType<MainCamera>();
         _player = FindObjectOfType<Rigidbody2D>();
+        yDiff = (_playerTuplePoint.position - transform.position).y;
     }
 
     private void FlipPlayer()
@@ -44,18 +51,6 @@ public class Player : MonoBehaviour
         _player.velocity = new Vector2(resultSpeed * _horizontalSpeed, _player.velocity.y);
     }
 
-    private bool ZoomCameraStat()
-    {
-        _isCameraZoomed = (int)_player.velocity.y > _speedForCamScale ? false : true;
-        return _isCameraZoomed;
-    }
-
-    private bool SpeedEffectStat()
-    {
-        _isSpeedEffectTurnedOn = (int)_player.velocity.y > _speedForEffect ? false : true;
-        return _isSpeedEffectTurnedOn;
-    }
-
     private void PlayerMaxSpeed()
     {
         if (_player.velocity.y < _maxFallDownSpeed)
@@ -67,8 +62,8 @@ public class Player : MonoBehaviour
     private void Update()
     {
         var x = Input.GetAxis("Horizontal");
-        _camera.CameraZoom(ZoomCameraStat(), Time.deltaTime);
-        _speedEffect.ChangeSpeedEffectStat(SpeedEffectStat());
+        _camera.SetCameraMinMaxValue(zoomCameraStat);
+        _speedEffect.ChangeSpeedEffectStat(speedEffectActive);
 
         _inputVector.x = Input.GetAxisRaw("Horizontal");
         FlipPlayer();

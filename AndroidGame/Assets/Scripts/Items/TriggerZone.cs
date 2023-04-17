@@ -3,26 +3,14 @@ using UnityEngine;
 
 public class TriggerZone: MonoBehaviour
 {
-    private SpawnSystem _spawnObjects;
-    [SerializeField] private bool _isTriggered;
-
-    private void Awake()
-    {
-        _spawnObjects = FindObjectOfType<SpawnSystem>();
-        _isTriggered = true;
-    }
+    public event Action<CollisionObject> OnPlayerInside;
 
     private void OnTriggerEnter2D(Collider2D obj)
     {
-        if (obj.gameObject.GetComponent<CollisionObject>() && _isTriggered)
+        var objInside = obj.gameObject.GetComponent<CollisionObject>();
+        if (objInside != null)
         {
-            _spawnObjects.SpawnObjects();
-            _isTriggered = false;
+            OnPlayerInside?.Invoke(objInside);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        _isTriggered = true;
     }
 }
