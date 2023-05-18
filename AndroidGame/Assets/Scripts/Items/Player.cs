@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
     private InputPanel _inputPanel;
     private Rigidbody2D _player;
-    [SerializeField] private Transform _playerTuplePoint;
+    [SerializeField] private TriggerZone _triggerZone;
+    [Inject] private GameController _gameController;
     [SerializeField] private float _horizontalSpeed;
     [SerializeField] private int _speedForCamScale;
     [SerializeField] private int _speedForEffect;
@@ -16,8 +18,7 @@ public class Player : MonoBehaviour
     
     private Vector3 _inputVector;
     private bool _faceRight;
-
-    public float yDiff { get; private set; }
+    
     
     private bool speedEffectActive => (int)_player.velocity.y <= _speedForEffect; 
     private bool zoomCameraStat => (int)_player.velocity.y <= _speedForCamScale;   
@@ -29,7 +30,12 @@ public class Player : MonoBehaviour
         _speedEffect = FindObjectOfType<SpeedEffect>();
         _camera = FindObjectOfType<MainCamera>();
         _player = FindObjectOfType<Rigidbody2D>();
-        yDiff = (_playerTuplePoint.position - transform.position).y;
+        _triggerZone.OnPlayerInside += TriggerZoneOnOnPlayerInside;
+    }
+
+    private void TriggerZoneOnOnPlayerInside(GameItem gameItem)
+    {
+        _gameController.Info.ScoreInfo.ChangeScore(gameItem.Value, gameItem.ObjectType);
     }
 
     private void FlipPlayer()
