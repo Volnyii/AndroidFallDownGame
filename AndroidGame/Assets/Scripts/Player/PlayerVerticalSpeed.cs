@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlayerSpeed: MonoBehaviour
+public class PlayerVerticalSpeed: MonoBehaviour
 {
     [SerializeField] private int _speedMaxValue; 
     [SerializeField] private int _speedForCamScale;
@@ -11,6 +11,9 @@ public class PlayerSpeed: MonoBehaviour
     private MainCamera _camera;
     private SpeedEffect _speedEffect;
     private int _speedCounter;
+    public int SpeedCounter => _speedCounter;
+    public int SpeedForCamScale => _speedForCamScale;
+    public int SpeedForEffect => _speedForEffect;
     
     private bool speedEffectActive => _speedCounter >= _speedForEffect; 
     private bool zoomCameraStat => _speedCounter >= _speedForCamScale;
