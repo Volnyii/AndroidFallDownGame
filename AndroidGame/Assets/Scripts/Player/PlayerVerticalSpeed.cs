@@ -1,27 +1,25 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerVerticalSpeed: MonoBehaviour
 {
     [SerializeField] private int _speedMaxValue; 
     [SerializeField] private int _speedForCamScale;
     [SerializeField] private int _speedForEffect;
+    [SerializeField] private int _speedStep;
     
     private TriggerZone _triggerZone;
-    private MainCamera _camera;
-    private SpeedEffect _speedEffect;
-    private int _speedCounter;
-    public int SpeedCounter => _speedCounter;
-    public int SpeedForCamScale => _speedForCamScale;
-    public int SpeedForEffect => _speedForEffect;
-    
-    private bool speedEffectActive => _speedCounter >= _speedForEffect; 
-    private bool zoomCameraStat => _speedCounter >= _speedForCamScale;
+    [SerializeField] private float _speedCounter;
+    public event Action<int> OnGearChanged;
 
-    private void Awake()
-    {   _speedEffect = FindObjectOfType<SpeedEffect>();
-        _camera = FindObjectOfType<MainCamera>();
-        _triggerZone = FindObjectOfType<TriggerZone>();
+    [SerializeField] private int _gear;
+    
+    private void Start()
+    {   _triggerZone = FindObjectOfType<TriggerZone>();
+        _gear = 1;
+        OnGearChanged?.Invoke(_gear);
         _triggerZone.OnPlayerInside += SpeedIncreased;
     }
 
@@ -30,15 +28,25 @@ public class PlayerVerticalSpeed: MonoBehaviour
         if (gameItem.ObjectType == ObjectType.Airplane)
         {
             _speedCounter = 0;
+            _gear = 1;
+            OnGearChanged?.Invoke(_gear);
         }
     }
 
     private void Update()
     {
-        _camera.SetCameraMinMaxValue(zoomCameraStat);
-        _speedEffect.ChangeSpeedEffectStat(speedEffectActive);
-        
-        _speedCounter += 1;
+        _speedCounter += Time.deltaTime;
+        if (_speedCounter >= _speedForCamScale && _gear == 1)
+        {
+            _gear = 2;
+            OnGearChanged?.Invoke(_gear);
+        }
+
+        if (_speedCounter >= _speedForEffect && _gear == 2)
+        {
+            _gear = 3;
+            OnGearChanged?.Invoke(_gear);
+        }
         if (_speedCounter > _speedMaxValue)
             _speedCounter = _speedMaxValue;
     }

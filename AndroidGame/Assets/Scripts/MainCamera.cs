@@ -9,19 +9,23 @@ public class MainCamera : MonoBehaviour
     [SerializeField] private float _maxZoom;
     private Vector3 _offset;
     private Camera _camera;
+    private PlayerVerticalSpeed _playerVerticalSpeed;
 
     private Coroutine _cameraFade;
     private bool _lastZoomState;
     
     private void Awake()
     {
+        _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>();
+        _playerVerticalSpeed.OnGearChanged += SetCameraMinMaxValue;
         _player = FindObjectOfType<Player>();
         _offset = transform.position - _player.transform.position;
         _camera = GetComponent<Camera>();
     }
     
-    public void SetCameraMinMaxValue(bool zoomIn)
+    private void SetCameraMinMaxValue(int gear)
     {
+        bool zoomIn = gear >= 2;
         if (_lastZoomState == zoomIn)
             return;
         
@@ -30,7 +34,7 @@ public class MainCamera : MonoBehaviour
         SetCameraSize(size);
     }
 
-    public void SetCameraSize(float size)
+    private void SetCameraSize(float size)
     {
         if (_cameraFade != null)
         {
