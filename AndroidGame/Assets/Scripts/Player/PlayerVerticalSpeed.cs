@@ -8,8 +8,7 @@ public class PlayerVerticalSpeed: MonoBehaviour
     [SerializeField] private int _speedMaxValue; 
     [SerializeField] private int _speedForCamScale;
     [SerializeField] private int _speedForEffect;
-    [SerializeField] private int _speedStep;
-    
+
     private TriggerZone _triggerZone;
     [SerializeField] private float _speedCounter;
     public event Action<int> OnGearChanged;

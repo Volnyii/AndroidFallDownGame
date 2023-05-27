@@ -4,7 +4,7 @@ using UnityEngine;
 public class MainCamera : MonoBehaviour
 {
     [SerializeField] private float _fadeTime = 1.5f;
-    [SerializeField] private Player _player;
+    [SerializeField] private SpriteRenderer _player;
     [SerializeField] private float _minZoom;
     [SerializeField] private float _maxZoom;
     private Vector3 _offset;
@@ -18,7 +18,6 @@ public class MainCamera : MonoBehaviour
     {
         _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>();
         _playerVerticalSpeed.OnGearChanged += SetCameraMinMaxValue;
-        _player = FindObjectOfType<Player>();
         _offset = transform.position - _player.transform.position;
         _camera = GetComponent<Camera>();
     }
