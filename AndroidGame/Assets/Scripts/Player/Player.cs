@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     
     private void ReturnPlayerToMinPoint()
     {
-        // Я думал, что понял, но я не понял;
+        _horizontalLine.ChangePlayerPosition();
     }
 
     private void InputPanelOnOnDragEvent(float inputX)

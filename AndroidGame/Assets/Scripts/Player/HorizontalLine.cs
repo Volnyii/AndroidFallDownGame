@@ -8,7 +8,7 @@ public class HorizontalLine: MonoBehaviour
     [SerializeField] private float _maxX;
     public event Action OnChangePlayerXPosition;
 
-    public void Update()
+    public void ChangePlayerPosition()
     {
         if (_movingXBody.position.x >= _maxX)
         {
@@ -18,7 +18,5 @@ public class HorizontalLine: MonoBehaviour
         {
             _movingXBody.position = new Vector3(_maxX, _movingXBody.position.y);
         }
-        OnChangePlayerXPosition?.Invoke();
-        
     }
 }
