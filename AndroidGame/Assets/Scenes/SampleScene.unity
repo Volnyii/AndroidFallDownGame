@@ -250,7 +250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185738361}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -724.18, y: -974.68, z: 83.91711}
+  m_LocalPosition: {x: -720.9839, y: -974.8006, z: 83.91711}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 225613651}
@@ -318,7 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9992d065a754bcdbde320cbfe8a4743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerBody: {fileID: 1547496319}
   _parallaxYSpeed: 0.1
+  _parallaxfactor: 0.9
+  _index: 0.03
 --- !u!1 &220860539
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +508,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489045525}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 6.37, z: 10}
+  m_LocalPosition: {x: 0.56, y: 6.37, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1547496319}
@@ -525,8 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movingXBody: {fileID: 1547496319}
-  _minX: 0
-  _maxX: 20
+  _camera: {fileID: 519420031}
+  _camChangedPos: {fileID: 519420030}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,7 +794,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9992d065a754bcdbde320cbfe8a4743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerBody: {fileID: 1547496319}
   _parallaxYSpeed: 0.3
+  _parallaxfactor: 0.5
+  _index: 0.025
 --- !u!1 &879119440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9992d065a754bcdbde320cbfe8a4743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerBody: {fileID: 1547496319}
   _parallaxYSpeed: 0.2
+  _parallaxfactor: 0.75
+  _index: 0.01
 --- !u!1 &1673461748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789590045}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 721.1224, y: 964.6426, z: -83.91711}
+  m_LocalPosition: {x: 721.1224, y: 970.7, z: -83.91711}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 225613651}
@@ -1564,9 +1573,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerIcon: {fileID: 1673461749}
-  _defaultSpeed: 0.1
-  _doubleSpeed: 0.2
-  _maxSpeed: 0.3
+  _defaultSpeed: 0.05
+  _doubleSpeed: 0.07
+  _maxSpeed: 0.09
 --- !u!1001 &6797401121631098734
 PrefabInstance:
   m_ObjectHideFlags: 0

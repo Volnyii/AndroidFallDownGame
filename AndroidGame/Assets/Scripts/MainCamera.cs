@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
@@ -13,6 +14,8 @@ public class MainCamera : MonoBehaviour
 
     private Coroutine _cameraFade;
     private bool _lastZoomState;
+
+    public event Action OnCameraWasChanged;
     
     private void Awake()
     {
@@ -35,6 +38,7 @@ public class MainCamera : MonoBehaviour
 
     private void SetCameraSize(float size)
     {
+        OnCameraWasChanged?.Invoke();
         if (_cameraFade != null)
         {
             StopCoroutine(_cameraFade);
@@ -49,14 +53,11 @@ public class MainCamera : MonoBehaviour
         var currentTime = 0f;
         while (currentTime < time)
         {
+            OnCameraWasChanged?.Invoke();
             _camera.orthographicSize = Mathf.Lerp(startValue, endValue, currentTime / time);
             currentTime += Time.deltaTime;
             yield return null;
         }
-    }
-    
-    private void Update() 
-    {        
-        transform.position = _player.transform.position + _offset;
+        OnCameraWasChanged?.Invoke();
     }
 }

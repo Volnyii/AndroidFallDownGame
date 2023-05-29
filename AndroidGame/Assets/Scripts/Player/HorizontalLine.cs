@@ -4,19 +4,33 @@ using UnityEngine;
 public class HorizontalLine: MonoBehaviour
 {
     [SerializeField] private Transform _movingXBody;
-    [SerializeField] private float _minX;
-    [SerializeField] private float _maxX;
-    public event Action OnChangePlayerXPosition;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private MainCamera _camChangedPos;
 
-    public void ChangePlayerPosition()
+    private float _leftBorderX;
+    private float _rightBorderX;
+
+    private void Awake()
     {
-        if (_movingXBody.position.x >= _maxX)
+        OnNeedToRecalcBorders();
+        _camChangedPos.OnCameraWasChanged += OnNeedToRecalcBorders;
+    }
+
+    private void OnNeedToRecalcBorders()
+    {
+        _leftBorderX = _camera.ScreenToWorldPoint(new Vector3(0f, 0f, 0f)).x;
+        _rightBorderX = _camera.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x;   
+    }
+    
+    private void Update()
+    {
+        if (_movingXBody.position.x >= _rightBorderX)
         {
-            _movingXBody.position = new Vector3(_minX, _movingXBody.position.y);
+            _movingXBody.position = new Vector3(_leftBorderX, _movingXBody.position.y);
         }
-        else if (_movingXBody.position.x <= _minX)
+        else if (_movingXBody.position.x <= _leftBorderX)
         {
-            _movingXBody.position = new Vector3(_maxX, _movingXBody.position.y);
+            _movingXBody.position = new Vector3(_rightBorderX, _movingXBody.position.y);
         }
     }
 }
