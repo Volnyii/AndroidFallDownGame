@@ -4,17 +4,30 @@ using UnityEngine.UI;
 
 public class TimeLine: MonoBehaviour
 {
-    [SerializeField] private RectTransform _playerIcon;
     [SerializeField] private float _defaultSpeed;
     [SerializeField] private float _doubleSpeed;
     [SerializeField] private float _maxSpeed;
-    private float _offset;
-    private PlayerVerticalSpeed _playerVerticalSpeed;
+    [SerializeField] private float _totalTime = 120f;
 
+    private PlayerVerticalSpeed _playerVerticalSpeed;
+    
+    [SerializeField] private Slider _slider;
+    
+    private float _timeToWork;
+    private float _currentTime;
+    private float _currentTimeK = 1f;
+    private bool _timerStarted;
+
+    public float State => _currentTime / _timeToWork;
+
+    public event Action OnGameWasBegin;
+    public event Action OnGameWasEnd;
+    
     private void Awake()
     {
         _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>();
         _playerVerticalSpeed.OnGearChanged += PlayerVerticalSpeedOnOnGearChanged;
+        SetUpTimer(_totalTime);
     }
 
     private void PlayerVerticalSpeedOnOnGearChanged(int gear)
@@ -22,24 +35,42 @@ public class TimeLine: MonoBehaviour
         switch (gear)
         {
             case 1:
-                _offset = _defaultSpeed;
+                _currentTimeK = _defaultSpeed;
                 break;
             case 2:
-                _offset = _doubleSpeed;
+                _currentTimeK = _doubleSpeed;
                 break;
             case 3:
-                _offset = _maxSpeed;
+                _currentTimeK = _maxSpeed;
                 break;
         }
     }
-
-    private void ChangePlayerIconPos(float offset)
+    
+    public void SetUpTimer(float timeToWork)
     {
-        _playerIcon.anchoredPosition = new Vector2(0, (float) (_playerIcon.anchoredPosition.y - offset));
+        _timerStarted = true;
+        _currentTimeK = 1f;
+        _currentTime = 0;
+        _timeToWork = timeToWork;
     }
-
+    
     private void Update()
     {
-        ChangePlayerIconPos(_offset);
+        if(!_timerStarted)
+            return;
+        
+        _currentTime += Time.deltaTime * _currentTimeK;
+        _slider.value = State;
+
+        if (State >= 1f)
+        {
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        _timerStarted = false;
+        OnGameWasEnd?.Invoke();
     }
 }

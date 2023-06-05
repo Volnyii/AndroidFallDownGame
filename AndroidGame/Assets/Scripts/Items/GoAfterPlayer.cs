@@ -13,6 +13,7 @@ public class GoAfterPlayer: MonoBehaviour
 
     private void Update()
     {
-        _playerSensors.position = new Vector3(_playerPosition.position.x, _playerSensors.position.y);
+        if (_playerSensors != null) 
+            _playerSensors.position = new Vector3(_playerPosition.position.x, _playerSensors.position.y);
     }
 }
