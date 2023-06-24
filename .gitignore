@@ -1,11 +1,8 @@
-  
 # This .gitignore file should be placed at the root of your Unity project directory
 #
-# Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
+# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-unity_2d/**/Library/
-/unity_2d/**/Library/
-[Ll]ibrary/
+/[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
@@ -17,8 +14,8 @@ unity_2d/**/Library/
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
-# Asset meta data should only be ignored when the corresponding asset is also ignored
-!/[Aa]ssets/**/*.meta
+# Recordings can get excessive in size
+/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -54,6 +51,7 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+
 # Unity3D generated file on crash reports
 sysinfo.txt
 
@@ -61,21 +59,7 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
-
-#Others
-*.log
-*.cache
-
-# Ignore the Cache folder since it is updated locally.
-/[Aa]ssets/Plugins/FMOD/Cache/*
-                    
-# Ignore bank files in the StreamingAssets folder.
-/[Aa]ssets/StreamingAssets//*.bank
-/[Aa]ssets/StreamingAssets//*.bank.meta
-                    
-# If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
-# Log files can be ignored.
-fmod_editor.log
+*.app
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -86,5 +70,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-2019.4.29f1/
-summer_adventure/Temp/*
