@@ -22,7 +22,7 @@ public class ParallaxObjects : MonoBehaviour
 
     private void Update()
     {
-        var newV = _startPosition + _offsetFromPlayer * _parallaxfactor;
+        var newV = _startPosition + _offsetFromPlayer * _parallaxfactor; //todo что-то тут не так
         _transformParallaxObject.position = new Vector3(newV.x, _transformParallaxObject.position.y + (_parallaxYSpeed * _index));
     }
 }
