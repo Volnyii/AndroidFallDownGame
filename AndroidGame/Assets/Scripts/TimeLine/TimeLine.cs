@@ -25,7 +25,7 @@ public class TimeLine: MonoBehaviour
     
     private void Awake()
     {
-        _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>();
+        _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>(true);
         _playerVerticalSpeed.OnGearChanged += PlayerVerticalSpeedOnOnGearChanged;
         SetUpTimer(_totalTime);
     }

@@ -16,7 +16,7 @@ public class PlayerVerticalSpeed: MonoBehaviour
     [SerializeField] private int _gear;
     
     private void Start()
-    {   _triggerZone = FindObjectOfType<TriggerZone>();
+    {   _triggerZone = FindObjectOfType<TriggerZone>(true);
         _gear = 1;
         OnGearChanged?.Invoke(_gear);
         _triggerZone.OnPlayerInside += SpeedIncreased;

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class HorizontalLine: MonoBehaviour
 {
+    [SerializeField] private int _jumpOffset;
     [SerializeField] private Transform _movingXBody;
     [SerializeField] private Camera _camera;
     [SerializeField] private MainCamera _camChangedPos;
@@ -10,7 +11,7 @@ public class HorizontalLine: MonoBehaviour
     private float _leftBorderX;
     private float _rightBorderX;
 
-    private void Awake()
+    private void OnEnable()
     {
         OnNeedToRecalcBorders();
         _camChangedPos.OnCameraWasChanged += OnNeedToRecalcBorders;
@@ -26,11 +27,11 @@ public class HorizontalLine: MonoBehaviour
     {
         if (_movingXBody.position.x >= _rightBorderX)
         {
-            _movingXBody.position = new Vector3(_leftBorderX, _movingXBody.position.y);
+            _movingXBody.position = new Vector3(_leftBorderX + _jumpOffset, _movingXBody.position.y);
         }
         else if (_movingXBody.position.x <= _leftBorderX)
         {
-            _movingXBody.position = new Vector3(_rightBorderX, _movingXBody.position.y);
+            _movingXBody.position = new Vector3(_rightBorderX - _jumpOffset, _movingXBody.position.y);
         }
     }
 }

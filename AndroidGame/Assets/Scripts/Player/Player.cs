@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _inputPanel = FindObjectOfType<InputPanel>();
+        _inputPanel = FindObjectOfType<InputPanel>(true);
         _inputPanel.OnDragEvent += InputPanelOnOnDragEvent;
         _triggerZone.OnPlayerInside += TriggerZoneOnOnPlayerInside;
     }

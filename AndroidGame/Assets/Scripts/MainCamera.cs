@@ -25,7 +25,7 @@ public class MainCamera : MonoBehaviour
     
     private void OnEnable()
     {
-        _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>();
+        _playerVerticalSpeed = FindObjectOfType<PlayerVerticalSpeed>(true);
         _playerVerticalSpeed.OnGearChanged += SetCameraMinMaxValue;
         _offset = transform.position - _player.transform.position;
         _camera = GetComponent<Camera>();
